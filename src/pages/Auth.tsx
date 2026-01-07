@@ -8,6 +8,7 @@ import { Mail, ArrowRight, Loader2 } from 'lucide-react';
 import { authHelpers } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer } from '@/lib/animation-configs';
 
 const GoogleLogo = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg 
@@ -95,117 +96,152 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="bg-grid noise">
-        <Navbar />
-        
-        <div className="flex items-center justify-center min-h-screen pt-16">
-          <Container>
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <Navbar />
+      
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-rhythm-blue/3 rounded-full will-change-transform"
+          style={{
+            filter: "blur(40px)",
+            transform: "translateZ(0)",
+          }}
+        />
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-rhythm-blue/3 rounded-full will-change-transform"
+          style={{
+            filter: "blur(40px)", 
+            transform: "translateZ(0)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen pt-20 pb-16">
+        <Container>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="max-w-md mx-auto"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-md mx-auto"
+              variants={fadeInUp}
+              className="glass-card rounded-2xl shadow-2xl border border-border/50 p-8"
             >
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm shadow-2xl">
-                <CardHeader className="text-center pb-6">
-                  <CardTitle className="text-3xl font-bold mb-2">
-                    Try PulsePlan for free!
-                  </CardTitle>
-                  <p className="text-muted-foreground text-base">
-                    Log in with Google or Apple.
+              {/* Header */}
+              <div className="text-center mb-8">
+                <motion.h1
+                  variants={fadeInUp}
+                  className="text-4xl md:text-5xl font-serif-hero font-normal leading-tight mb-4"
+                >
+                  Welcome to <span className="italic">Sift</span>
+                </motion.h1>
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-lg text-muted-foreground"
+                >
+                  Get started with your AI-powered study planner
+                </motion.p>
+              </div>
+              
+              <motion.div
+                variants={fadeInUp}
+                className="space-y-4"
+              >
+                {/* Google */}
+                <Button
+                  onClick={() => handleOAuthSignIn('google')}
+                  disabled={isLoading}
+                  className="w-full h-12 bg-card/50 hover:bg-card/80 text-foreground border border-border hover:border-primary/50 transition-all duration-200 shadow-sm hover:shadow-md rounded-xl"
+                  variant="outline"
+                >
+                  {loadingProvider === 'google' ? (
+                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
+                  ) : (
+                    <GoogleLogo className="w-5 h-5 mr-3" />
+                  )}
+                  Continue with Google
+                </Button>
+
+                {/* Apple */}
+                <Button
+                  onClick={() => handleOAuthSignIn('apple')}
+                  disabled={isLoading}
+                  className="w-full h-12 bg-card/50 hover:bg-card/80 text-foreground border border-border hover:border-primary/50 transition-all duration-200 shadow-sm hover:shadow-md rounded-xl"
+                  variant="outline"
+                >
+                  {loadingProvider === 'apple' ? (
+                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
+                  ) : (
+                    <AppleLogo className="w-5 h-5 mr-3" />
+                  )}
+                  Continue with Apple
+                </Button>
+
+                {/* Divider */}
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-border/50"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-4 bg-background text-muted-foreground">OR</span>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <form onSubmit={handleEmailSignIn} className="space-y-4">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-12 bg-card/50 border-border/50 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 rounded-xl transition-all duration-200"
+                    required
+                  />
+                  
+                  <Button
+                    type="submit"
+                    disabled={isLoading || !email}
+                    className="w-full h-12 bg-foreground dark:bg-foreground text-background dark:text-background hover:bg-foreground/90 dark:hover:bg-foreground/90 font-medium transition-all duration-200 rounded-xl shadow-lg hover:shadow-xl"
+                  >
+                    {isLoading && loadingProvider === null ? (
+                      <div className="flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        Continue with Email
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
+                    )}
+                  </Button>
+                </form>
+
+                {/* Terms */}
+                <div className="text-center pt-6">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    By continuing, you agree to our{' '}
+                    <a href="/terms" className="text-primary hover:underline font-medium">
+                      Terms of Service
+                    </a>{' '}
+                    and{' '}
+                    <a href="/privacy" className="text-primary hover:underline font-medium">
+                      Privacy Policy
+                    </a>
                   </p>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                                     {/* Google */}
-                   <Button
-                     onClick={() => handleOAuthSignIn('google')}
-                     disabled={isLoading}
-                     className="w-full h-12 bg-muted hover:bg-muted/80 text-foreground border border-border/50 transition-all duration-200"
-                     variant="outline"
-                   >
-                     {loadingProvider === 'google' ? (
-                       <Loader2 className="w-6 h-6 mr-3 animate-spin" />
-                     ) : (
-                       <GoogleLogo className="w-6 h-6 mr-3" />
-                     )}
-                     Continue with Google
-                   </Button>
-
-                                     {/* Apple */}
-                   <Button
-                     onClick={() => handleOAuthSignIn('apple')}
-                     disabled={isLoading}
-                     className="w-full h-12 bg-muted hover:bg-muted/80 text-foreground border border-border/50 transition-all duration-200"
-                     variant="outline"
-                   >
-                     {loadingProvider === 'apple' ? (
-                       <Loader2 className="w-6 h-6 mr-3 animate-spin" />
-                     ) : (
-                       <AppleLogo className="w-6 h-6 mr-3" />
-                     )}
-                     Continue with Apple
-                   </Button>
-
-                  {/* Divider */}
-                  <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-border/50"></div>
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="px-4 bg-card text-muted-foreground">OR</span>
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <form onSubmit={handleEmailSignIn} className="space-y-4">
-                    <Input
-                      type="email"
-                      placeholder="tony.stark@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="h-12 bg-muted border-border/50 text-foreground placeholder:text-muted-foreground focus:border-rhythm-blue focus:ring-rhythm-blue/20"
-                      required
-                    />
-                    
-                    <Button
-                      type="submit"
-                      disabled={isLoading || !email}
-                      className="w-full h-12 bg-rhythm-blue hover:bg-rhythm-blue/90 text-white font-medium transition-all duration-200"
-                    >
-                      {isLoading && loadingProvider === null ? (
-                        <div className="flex items-center gap-2">
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          Sending...
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          Continue
-                          <ArrowRight className="w-4 h-4" />
-                        </div>
-                      )}
-                    </Button>
-                  </form>
-
-                  {/* Terms */}
-                  <div className="text-center pt-4">
-                    <p className="text-xs text-muted-foreground">
-                      By signing up, you agree to our{' '}
-                      <a href="/terms" className="text-rhythm-blue hover:underline">
-                        Terms of Service
-                      </a>{' '}
-                      and{' '}
-                      <a href="/privacy" className="text-rhythm-blue hover:underline">
-                        Privacy Policy
-                      </a>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </motion.div>
             </motion.div>
-          </Container>
-        </div>
+          </motion.div>
+        </Container>
       </div>
     </div>
   );

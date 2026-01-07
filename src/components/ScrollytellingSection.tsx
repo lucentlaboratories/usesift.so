@@ -74,7 +74,7 @@ export const ScrollytellingSection = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative bg-black"
+      className="relative bg-background"
       style={{ height: '800vh' }} // 8x viewport height for much longer scroll distance per section
     >
       {/* Sticky content container - only sticks within this section */}
@@ -87,41 +87,45 @@ export const ScrollytellingSection = () => {
             {/* Left Column - Fixed Text Content */}
             <div className="text-center lg:text-left">
               <h2 
-                className="text-4xl lg:text-5xl font-bold mb-6 transition-all duration-500 ease-out"
+                className="text-4xl lg:text-5xl font-semibold mb-6 transition-all duration-500 ease-out"
                 style={{ 
-                  color: activeSection === 0 ? '#ffffff' : '#6b7280',
+                  color: activeSection === 0 ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                   opacity: activeSection === 0 ? 1 : 0.3,
-                  transform: activeSection === 0 ? 'scale(1)' : 'scale(0.95)'
+                  transform: activeSection === 0 ? 'scale(1)' : 'scale(0.95)',
+                  letterSpacing: '-0.01em'
                 }}
               >
                 AI overview.
               </h2>
               <h2 
-                className="text-4xl lg:text-5xl font-bold mb-6 transition-all duration-500 ease-out"
+                className="text-4xl lg:text-5xl font-semibold mb-6 transition-all duration-500 ease-out"
                 style={{ 
-                  color: activeSection === 1 ? '#ffffff' : '#6b7280',
+                  color: activeSection === 1 ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                   opacity: activeSection === 1 ? 1 : 0.3,
-                  transform: activeSection === 1 ? 'scale(1)' : 'scale(0.95)'
+                  transform: activeSection === 1 ? 'scale(1)' : 'scale(0.95)',
+                  letterSpacing: '-0.01em'
                 }}
               >
                 Time-block your day.
               </h2>
               <h2 
-                className="text-4xl lg:text-5xl font-bold mb-6 transition-all duration-500 ease-out"
+                className="text-4xl lg:text-5xl font-semibold mb-6 transition-all duration-500 ease-out"
                 style={{ 
-                  color: activeSection === 2 ? '#ffffff' : '#6b7280',
+                  color: activeSection === 2 ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                   opacity: activeSection === 2 ? 1 : 0.3,
-                  transform: activeSection === 2 ? 'scale(1)' : 'scale(0.95)'
+                  transform: activeSection === 2 ? 'scale(1)' : 'scale(0.95)',
+                  letterSpacing: '-0.01em'
                 }}
               >
                 Daily briefings.
               </h2>
               <h2 
-                className="text-4xl lg:text-5xl font-bold mb-6 transition-all duration-500 ease-out"
+                className="text-4xl lg:text-5xl font-semibold mb-6 transition-all duration-500 ease-out"
                 style={{ 
-                  color: activeSection === 3 ? '#ffffff' : '#6b7280',
+                  color: activeSection === 3 ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                   opacity: activeSection === 3 ? 1 : 0.3,
-                  transform: activeSection === 3 ? 'scale(1)' : 'scale(0.95)'
+                  transform: activeSection === 3 ? 'scale(1)' : 'scale(0.95)',
+                  letterSpacing: '-0.01em'
                 }}
               >
                 AI-powered reminders.
@@ -131,7 +135,7 @@ export const ScrollytellingSection = () => {
                 <Button 
                   variant="secondary" 
                   size="lg"
-                  className="w-fit bg-white text-black hover:bg-gray-100 text-lg px-8 py-3 rounded-full font-semibold"
+                  className="w-fit bg-rhythm-blue text-white hover:bg-rhythm-blue/90 text-lg px-8 py-3 rounded-full font-semibold"
                 >
                   Try it now!
                 </Button>

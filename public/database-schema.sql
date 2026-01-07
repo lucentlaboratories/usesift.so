@@ -1,4 +1,4 @@
--- PulsePlan Database Schema Updates for Canvas Integration
+-- Sift Database Schema Updates for Canvas Integration
 -- Run these commands in your Supabase SQL editor or database management tool
 
 -- Add Canvas integration fields to assignments table

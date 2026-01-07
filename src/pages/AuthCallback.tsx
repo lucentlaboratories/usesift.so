@@ -26,7 +26,7 @@ const AuthCallback = () => {
           
         // This message can be picked up by a content script in a browser extension
           window.postMessage({
-            type: 'PULSEPLAN_AUTH_SUCCESS',
+            type: 'Sift_AUTH_SUCCESS',
           payload: {
             accessToken: session.access_token,
             refreshToken: session.refresh_token,

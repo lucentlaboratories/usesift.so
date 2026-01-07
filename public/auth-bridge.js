@@ -1,6 +1,6 @@
 /**
- * PulsePlan Auth Bridge
- * Automatically detects authentication on pulseplan.app and syncs with browser extension
+ * Sift Auth Bridge
+ * Automatically detects authentication on Sift.app and syncs with browser extension
  *
  * Usage: Include this script in your website's HTML
  * <script src="/auth-bridge.js"></script>
@@ -11,7 +11,7 @@
 
   // Configuration
   const CONFIG = {
-    extensionId: "pulseplan-extension", // Replace with actual extension ID
+    extensionId: "Sift-extension", // Replace with actual extension ID
     retryInterval: 1000, // Check for auth every 1 second
     maxRetries: 30, // Stop checking after 30 seconds
     debug: false,
@@ -23,7 +23,7 @@
   // Debug logging
   function log(...args) {
     if (CONFIG.debug) {
-      console.log("[PulsePlan Auth Bridge]", ...args);
+      console.log("[Sift Auth Bridge]", ...args);
     }
   }
 
@@ -37,7 +37,7 @@
     // Method 1: PostMessage to current window (for same-origin scenarios)
     window.postMessage(
       {
-        type: "PULSEPLAN_AUTH_SUCCESS",
+        type: "Sift_AUTH_SUCCESS",
         token: token,
         user: user,
         timestamp: Date.now(),
@@ -52,7 +52,7 @@
         window.chrome.runtime.sendMessage(
           CONFIG.extensionId,
           {
-            type: "PULSEPLAN_AUTH_SUCCESS",
+            type: "Sift_AUTH_SUCCESS",
             token: token,
             user: user,
             timestamp: Date.now(),
@@ -73,9 +73,9 @@
 
     // Method 3: LocalStorage for persistence
     try {
-      localStorage.setItem("pulseplan_auth_token", token);
-      localStorage.setItem("pulseplan_auth_user", JSON.stringify(user));
-      localStorage.setItem("pulseplan_auth_timestamp", Date.now().toString());
+      localStorage.setItem("Sift_auth_token", token);
+      localStorage.setItem("Sift_auth_user", JSON.stringify(user));
+      localStorage.setItem("Sift_auth_timestamp", Date.now().toString());
       log("Stored auth data in localStorage");
     } catch (error) {
       log("Failed to store in localStorage:", error);
@@ -141,8 +141,8 @@
     log("Checking for manual auth integration...");
 
     // Check if auth data was manually set
-    const authToken = localStorage.getItem("pulseplan_manual_token");
-    const authUser = localStorage.getItem("pulseplan_manual_user");
+    const authToken = localStorage.getItem("Sift_manual_token");
+    const authUser = localStorage.getItem("Sift_manual_user");
 
     if (authToken && authUser) {
       try {
@@ -150,8 +150,8 @@
         log("Found manual auth data");
         sendTokenToExtension(authToken, user);
         // Clean up manual auth data
-        localStorage.removeItem("pulseplan_manual_token");
-        localStorage.removeItem("pulseplan_manual_user");
+        localStorage.removeItem("Sift_manual_token");
+        localStorage.removeItem("Sift_manual_user");
         stopMonitoring();
         return true;
       } catch (error) {
@@ -200,7 +200,7 @@
 
   // Listen for manual auth messages
   window.addEventListener("message", function (event) {
-    if (event.data && event.data.type === "PULSEPLAN_MANUAL_AUTH") {
+    if (event.data && event.data.type === "Sift_MANUAL_AUTH") {
       log("Received manual auth message:", event.data);
       if (event.data.token && event.data.user) {
         sendTokenToExtension(event.data.token, event.data.user);

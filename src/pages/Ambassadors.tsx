@@ -36,7 +36,7 @@ const Ambassador = () => {
     {
       number: "2",
       title: "Make a story post or campus share",
-      description: "Share PulsePlan with your student networks"
+      description: "Share Sift with your student networks"
     },
     {
       number: "3",
@@ -57,30 +57,32 @@ const Ambassador = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Navbar />
       
       {/* Hero Section */}
-      <Section className="pt-24 pb-16">
+      <Section className="pt-40 pb-24">
         <Container>
-          <div className="max-w-6xl mx-auto px-8 pt-16">
-            {/* Top Section - Ambassador Banner */}
-            <div className="text-center mb-12">
-              <div className="glass-card p-8 rounded-2xl mb-8 inline-block relative overflow-hidden">
-                {/* Blue accent line */}
-                <div className="absolute top-0 left-0 w-full h-2 bg-rhythm-blue"></div>
-                <p className="text-rhythm-blue text-sm font-semibold mb-4 uppercase tracking-wider">Ambassador Program</p>
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">Become a PulsePlan Ambassador</h1>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Share the tool you love, earn lifetime access, and help students take back their time.
-                </p>
-              </div>
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-5xl sm:text-6xl lg:text-6xl font-serif-hero font-normal tracking-tight mb-4">
+                Become a Sift Ambassador
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Share the tool you love, earn lifetime access, and help students take back their time.
+              </p>
             </div>
 
             {/* Value Proposition */}
-            <div className="text-center mb-12">
-              <h2 className="text-2xl font-bold mb-6">What You Get</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl sm:text-6xl lg:text-6xl font-serif-hero font-normal tracking-tight mb-4">
+                What You Get
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
+                Join our ambassador program and unlock exclusive benefits
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {valueCards.map((card, index) => (
                   <motion.div
                     key={index}
@@ -88,12 +90,12 @@ const Ambassador = () => {
                     whileTap={tapScale}
                     className="will-change-transform"
                   >
-                                         <div className="glass-card p-6 rounded-2xl text-center relative overflow-hidden">
-                      <div className="w-12 h-12 mx-auto mb-4 bg-rhythm-blue rounded-xl flex items-center justify-center">
-                        <card.icon className="w-6 h-6 text-white" />
+                    <div className="glass-card p-8 rounded-2xl text-center h-full flex flex-col">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-rhythm-blue rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
+                        <card.icon className="w-7 h-7 text-primary-foreground" />
                       </div>
-                      <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
-                      <p className="text-muted-foreground text-sm">{card.description}</p>
+                      <h3 className="text-2xl font-bold mb-2 text-foreground flex-shrink-0">{card.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed flex-grow">{card.description}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -107,10 +109,10 @@ const Ambassador = () => {
                 whileTap={tapScale}
                 className="will-change-transform"
               >
-                                 <Button
-                   asChild
-                   className="bg-rhythm-blue text-white px-10 py-5 text-xl rounded-xl font-semibold hover:bg-rhythm-blue/90 transition-colors duration-200"
-                 >
+                <Button
+                  asChild
+                  className="bg-rhythm-blue text-white px-10 py-5 text-xl rounded-xl font-semibold hover:bg-rhythm-blue/90 transition-colors duration-200"
+                >
                   <a href="https://www.notion.so/connergroth/2036b20844a880f7a065cc060a0014e3?pvs=106" target="_blank" rel="noopener noreferrer">
                     Apply Now
                     <ArrowRight className="ml-2 w-6 h-6" />
@@ -123,16 +125,21 @@ const Ambassador = () => {
       </Section>
 
       {/* What You'll Do Section */}
-      <Section className="py-16">
+      <Section className="py-24">
         <Container>
-          <div className="max-w-4xl mx-auto px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">What You'll Do</h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-serif-hero font-normal tracking-tight mb-4">
+                What You'll Do
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Your role as an ambassador
+              </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 max-w-4xl mx-auto">
               {[
-                "Share PulsePlan in your school's private Snapchat story or other student networks",
+                "Share Sift in your school's private Snapchat story or other student networks",
                 "Help us test features & give feedback",
                 "Spread the word to friends and orgs"
               ].map((item, index) => (
@@ -142,9 +149,9 @@ const Ambassador = () => {
                   whileTap={tapScale}
                   className="will-change-transform"
                 >
-                  <div className="flex items-center gap-4 p-4 glass-card rounded-xl relative overflow-hidden">
-                    <Check className="w-5 h-5 text-rhythm-blue flex-shrink-0" />
-                    <span>{item}</span>
+                  <div className="flex items-center gap-4 p-6 glass-card rounded-2xl">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-foreground">{item}</span>
                   </div>
                 </motion.div>
               ))}
@@ -154,14 +161,19 @@ const Ambassador = () => {
       </Section>
 
       {/* How It Works Section */}
-      <Section className="py-16">
+      <Section className="py-24">
         <Container>
-          <div className="max-w-6xl mx-auto px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">How It Works</h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-serif-hero font-normal tracking-tight mb-4">
+                How It Works
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Get started in three simple steps
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {steps.map((step, index) => (
                 <motion.div
                   key={index}
@@ -169,10 +181,10 @@ const Ambassador = () => {
                   whileTap={tapScale}
                   className="will-change-transform text-center"
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 glass-card rounded-full flex items-center justify-center relative overflow-hidden">
+                  <div className="w-16 h-16 mx-auto mb-4 glass-card rounded-full flex items-center justify-center">
                     <span className="text-2xl font-bold text-rhythm-blue">{step.number}</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-foreground">{step.title}</h3>
                   <p className="text-muted-foreground text-sm">{step.description}</p>
                 </motion.div>
               ))}
@@ -182,14 +194,19 @@ const Ambassador = () => {
       </Section>
 
       {/* FAQs Section */}
-      <Section className="py-16">
+      <Section className="py-24">
         <Container>
-          <div className="max-w-4xl mx-auto px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-serif-hero font-normal tracking-tight mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Everything you need to know about the program
+              </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4 max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={index}
@@ -197,8 +214,8 @@ const Ambassador = () => {
                   whileTap={tapScale}
                   className="will-change-transform"
                 >
-                  <div className="glass-card p-6 rounded-2xl relative overflow-hidden">
-                    <h3 className="text-lg font-semibold mb-3 text-rhythm-blue">{faq.question}</h3>
+                  <div className="glass-card p-6 rounded-2xl">
+                    <h3 className="text-lg font-semibold mb-3 text-foreground">{faq.question}</h3>
                     <p className="text-muted-foreground">{faq.answer}</p>
                   </div>
                 </motion.div>
@@ -209,10 +226,15 @@ const Ambassador = () => {
       </Section>
 
       {/* Final CTA Section */}
-      <Section className="py-16">
+      <Section className="py-24">
         <Container>
-          <div className="max-w-4xl mx-auto px-8 text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to join the team?</h2>
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl font-serif-hero font-normal tracking-tight mb-6">
+              Ready to <span className="italic">join the team?</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+              Start your journey as a Sift Ambassador today.
+            </p>
             <motion.div
               whileHover={hoverScale}
               whileTap={tapScale}
@@ -220,11 +242,11 @@ const Ambassador = () => {
             >
               <Button
                 asChild
-                className="bg-rhythm-blue text-white px-8 py-4 text-lg rounded-xl font-semibold hover:bg-rhythm-blue/90 transition-colors duration-200"
+                className="bg-rhythm-blue text-white hover:bg-rhythm-blue/90 text-lg px-8 py-6 rounded-xl font-semibold transition-colors duration-200"
               >
                 <a href="https://www.notion.so/connergroth/2036b20844a880f7a065cc060a00144e3?pvs=106" target="_blank" rel="noopener noreferrer">
                   Apply to be an Ambassador
-                  <Users className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </a>
               </Button>
             </motion.div>

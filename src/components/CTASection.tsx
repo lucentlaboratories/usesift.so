@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
 import { Container } from '@/components/ui/container';
 import { Section } from '@/components/ui/section';
-import { GlowingOrb } from '@/components/ui/glowing-orb';
+import { PulseTrace } from '@/components/ui/pulse-trace';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { 
   fadeInUp, 
   staggerContainer, 
@@ -27,101 +26,101 @@ const AppleLogo = ({ className = "w-5 h-5" }: { className?: string }) => (
 
 export const CTASection = () => {
   return (
-    <Section className="relative">
+    <Section className="relative py-24">
       <Container>
         <motion.div
           initial="hidden"
           whileInView="visible"
           variants={staggerContainer}
           viewport={viewportConfig}
-          className="max-w-3xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center"
         >
+          {/* PulseTrace Animation */}
           <motion.div
             variants={fadeInUp}
-            className="relative inline-block mb-6"
+            className="flex justify-center mb-8"
           >
-            <GlowingOrb size="md" className="mx-auto" color="blue" />
+            <div className="relative">
+              <PulseTrace 
+                active={true}
+                width={200}
+                height={200}
+                className="drop-shadow-2xl"
+              />
+              
+              {/* Background glow effect */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-40 h-40 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-2xl animate-pulse" />
+              </div>
+            </div>
           </motion.div>
           
           <motion.h2
             variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight will-change-transform"
+            className="text-5xl sm:text-6xl lg:text-7xl font-serif-hero font-normal tracking-tight leading-tight mb-6"
           >
-            Plan less. <span className="text-gradient-blue">Do more.</span>
+            Get Organized, <span className="italic">Automatically</span>
           </motion.h2>
           
           <motion.p
             variants={fadeInUp}
-            className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto"
+            className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Join students who are finding their academic rhythm
-            with AI-powered scheduling that adapts to their real habits.
+            Join thousands of students who let Sift organize their academic life.
           </motion.p>
           
           <motion.div
             variants={fadeInUp}
-            className="mt-8"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <ButtonGroup className="justify-center gap-4">
-              <motion.div
-                whileHover={hoverScale}
-                whileTap={tapScale}
-                className="will-change-transform"
-              >
-                <Button size="lg" className="bg-rhythm-blue text-white hover:bg-rhythm-blue/90 text-xl px-10 py-5 rounded-2xl transition-colors duration-200">
-                  <AppleLogo className="w-7 h-7 mr-3" />Download the App
-                </Button>
-              </motion.div>
-              <motion.div
-                whileHover={hoverScale}
-                whileTap={tapScale}
-                className="will-change-transform"
-              >
-                <Button size="lg" variant="outline" className="text-xl px-10 py-5 rounded-2xl bg-transparent hover:bg-white/10 text-white border border-white/30 hover:border-white/60 transition-all duration-200">
-                  Try It Free
-                </Button>
-              </motion.div>
-              <motion.div
-                whileTap={tapScale}
-                className="will-change-transform"
-              >
-                <Button size="lg" variant="outline" className="text-xl px-10 py-5 rounded-2xl bg-black hover:bg-black/90 text-white border border-white/20 hover:border-white/60 transition-all duration-200">
-                  Upgrade to Premium
-                </Button>
-              </motion.div>
-            </ButtonGroup>
+            <motion.div
+              whileHover={hoverScale}
+              whileTap={tapScale}
+            >
+              <Button size="lg" className="bg-foreground dark:bg-foreground text-background dark:text-background hover:bg-foreground/90 dark:hover:bg-foreground/90 text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200">
+                <AppleLogo className="w-6 h-6 mr-2" />
+                Download the App
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={hoverScale}
+              whileTap={tapScale}
+            >
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl bg-white/80 dark:bg-transparent backdrop-blur-sm hover:bg-white dark:hover:bg-foreground/10 text-foreground border-foreground/10 dark:border-foreground/20 shadow-sm hover:shadow-md transition-all duration-200">
+                Try It Free
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </Container>
 
-      {/* Optimized background elements */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
-          className="absolute top-1/3 left-1/4 w-64 h-64 bg-rhythm-blue/5 rounded-full will-change-transform"
+          className="absolute top-1/2 left-1/4 w-96 h-96 bg-rhythm-blue/3 rounded-full"
           style={{
-            filter: "blur(40px)",
-            transform: "translateZ(0)",
+            filter: "blur(80px)",
           }}
           animate={{
-            y: [-15, 15, -15],
+            scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 10,
+            duration: 20,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
         <motion.div 
-          className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-rhythm-coral/5 rounded-full will-change-transform"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rhythm-coral/3 rounded-full"
           style={{
-            filter: "blur(40px)",
-            transform: "translateZ(0)",
+            filter: "blur(80px)",
           }}
           animate={{
-            y: [15, -15, 15],
+            scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 12,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 2,

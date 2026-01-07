@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp } from "@/lib/animation-configs";
 import { Menu, X, User } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useTheme } from "@/contexts/ThemeContext";
 import pulseLogo from "/assets/pulselogo.png";
+import pulseBlackLogo from "/assets/pulseblack.png";
 
 const AppleLogo = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg 
@@ -20,14 +22,43 @@ const AppleLogo = ({ className = "w-5 h-5" }: { className?: string }) => (
 );
 
 const Navbar = () => {
+  const { theme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const [actualTheme, setActualTheme] = useState<'light' | 'dark'>('dark');
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+
+  // Determine actual theme (resolve 'system' to light/dark)
+  useEffect(() => {
+    const getActualTheme = () => {
+      if (theme === 'system') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      return theme;
+    };
+
+    const resolvedTheme = getActualTheme();
+    setActualTheme(resolvedTheme);
+
+    // Listen for system theme changes when theme is 'system'
+    if (theme === 'system') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = () => {
+        setActualTheme(mediaQuery.matches ? 'dark' : 'light');
+      };
+
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+  }, [theme]);
+
+  // Get logo based on theme
+  const logo = actualTheme === 'light' ? pulseBlackLogo : pulseLogo;
   
   // Check authentication status
   useEffect(() => {
@@ -117,9 +148,9 @@ const Navbar = () => {
     <header className="fixed top-0 left-0 right-0 z-50 px-6 pt-6">
       <nav
         className={`mx-auto max-w-6xl transition-all duration-300 rounded-2xl will-change-transform ${
-          scrolled 
-            ? 'bg-background/85 backdrop-blur-xl shadow-xl border border-white/20' 
-            : 'bg-background/60 backdrop-blur-lg'
+          scrolled
+            ? 'bg-background/85 backdrop-blur-xl shadow-xl border border-border'
+            : 'bg-background/60 backdrop-blur-lg border border-border/50'
         }`}
       >
         <Container className="px-8">
@@ -129,29 +160,29 @@ const Navbar = () => {
               className="flex items-center space-x-2 group"
               onClick={() => window.scrollTo(0, 0)}
             >
-              <img src={pulseLogo} alt="PulsePlan" className="w-8 h-8" />
-              <span className="text-2xl font-bold transition-colors">
-                PulsePlan
+              <img src={logo} alt="Sift" className="w-8 h-8" />
+              <span className="text-2xl font-serif-hero transition-colors">
+                Sift
               </span>
             </Link>
             
             <nav className="hidden md:flex items-center gap-2">
-              <button 
+              <button
                 onClick={() => handleSectionNavigation('features')}
-                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 rounded-lg transition-all duration-200"
+                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-200"
               >
                 Features
               </button>
-              <Link 
-                to="/pricing" 
-                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 rounded-lg transition-all duration-200"
+              <Link
+                to="/pricing"
+                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-200"
                 onClick={() => window.scrollTo(0, 0)}
               >
                 Pricing
               </Link>
-              <Link 
-                to="/ambassadors" 
-                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 rounded-lg transition-all duration-200"
+              <Link
+                to="/ambassadors"
+                className="px-5 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-200"
                 onClick={() => window.scrollTo(0, 0)}
               >
                 Ambassadors
@@ -163,29 +194,29 @@ const Navbar = () => {
               <div className="hidden md:flex items-center gap-3">
                 {!loading && (
                   user ? (
-                    <Button 
-                      variant="outline" 
-                      size="default" 
-                      className="text-base font-medium hover:bg-white/8 border border-white/20 hover:border-white/40 px-5 transition-all duration-200"
+                    <Button
+                      variant="outline"
+                      size="default"
+                      className="text-base font-medium hover:bg-accent border border-border hover:border-border px-5 transition-all duration-200"
                       onClick={handleSignOut}
                     >
                       <User className="w-4 h-4 mr-2" />
                       Account
                     </Button>
                   ) : (
-                    <Button 
+                    <Button
                       asChild
-                      variant="outline" 
-                      size="default" 
-                      className="text-base font-medium hover:bg-white/8 border border-white/20 hover:border-white/40 px-5 transition-all duration-200"
+                      variant="outline"
+                      size="default"
+                      className="text-base font-medium hover:bg-accent border border-border hover:border-border px-5 transition-all duration-200"
                     >
                       <Link to="/auth">Log In</Link>
                     </Button>
                   )
                 )}
-                <Button 
-                  size="default" 
-                  className="bg-white hover:bg-white/90 text-black text-base font-medium shadow-lg hover:shadow-xl transition-all duration-200 px-6"
+                <Button
+                  size="default"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-200 px-6"
                 >
                   <AppleLogo className="w-5 h-5" />
                   Get the App
@@ -195,7 +226,7 @@ const Navbar = () => {
               {/* Optimized Mobile hamburger button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-foreground hover:bg-white/8 rounded-lg transition-colors duration-150 active:scale-95"
+                className="md:hidden p-2 text-foreground hover:bg-accent rounded-lg transition-colors duration-150 active:scale-95"
                 aria-label="Toggle mobile menu"
                 style={{ willChange: 'transform' }}
               >
@@ -222,7 +253,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg md:hidden flex flex-col"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-lg md:hidden flex flex-col"
             style={{ height: `${viewportHeight}px` }}
           >
             {/* Header with logo and close button */}
@@ -232,9 +263,9 @@ const Navbar = () => {
                 className="flex items-center space-x-2 group"
                 onClick={handleLinkClick}
               >
-                <img src={pulseLogo} alt="PulsePlan" className="w-8 h-8" />
+                <img src={logo} alt="Sift" className="w-8 h-8" />
                 <span className="text-2xl font-bold">
-                  PulsePlan
+                  Sift
                 </span>
               </Link>
               <button
@@ -278,29 +309,29 @@ const Navbar = () => {
               <div className="space-y-4 mt-auto">
                 {!loading && (
                   user ? (
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      className="w-full text-lg font-medium hover:bg-white/8 border border-white/20 hover:border-white/40 py-4"
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full text-lg font-medium hover:bg-accent border border-border py-4"
                       onClick={handleSignOut}
                     >
                       <User className="w-4 h-4 mr-2" />
                       Account
                     </Button>
                   ) : (
-                    <Button 
+                    <Button
                       asChild
-                      variant="outline" 
-                      size="lg" 
-                      className="w-full text-lg font-medium hover:bg-white/8 border border-white/20 hover:border-white/40 py-4"
+                      variant="outline"
+                      size="lg"
+                      className="w-full text-lg font-medium hover:bg-accent border border-border py-4"
                     >
                       <Link to="/auth">Log In</Link>
                     </Button>
                   )
                 )}
-                <Button 
-                  size="lg" 
-                  className="w-full bg-white hover:bg-white/90 text-black text-lg font-medium shadow-lg py-4"
+                <Button
+                  size="lg"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg font-medium shadow-lg py-4"
                 >
                   <AppleLogo className="w-5 h-5 mr-2" />
                   Get the App

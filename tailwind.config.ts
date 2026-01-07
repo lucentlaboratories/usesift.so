@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],
+				'serif-hero': ['Source Serif Pro', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

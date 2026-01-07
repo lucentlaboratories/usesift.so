@@ -1,6 +1,6 @@
-# PulsePlan
+# Sift
 
-A sleek and modern landing page featuring detailed PulsePlan information and features.
+A sleek and modern landing page featuring detailed Sift information and features.
 
 ## Tech Stack
 
@@ -14,7 +14,7 @@ A sleek and modern landing page featuring detailed PulsePlan information and fea
 ## Project Structure
 
 ```
-pulseplan.app/
+Sift.app/
 ├── public/               # Static assets
 │   ├── images/           # Image files
 │   └── favicon.svg       # Site favicon
